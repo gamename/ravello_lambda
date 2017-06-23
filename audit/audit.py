@@ -20,12 +20,15 @@ from urllib2 import Request, urlopen, URLError, HTTPError
 SLACK_CHANNEL = '#training'  # Enter the Slack channel to send a message to
 #SLACK_CHANNEL = '#play'  # debug
 
+
 # noinspection PyPep8
-HOOK_URL = 'https://hooks.slack.com/services/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'
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+ENCRYPTED_HOOK_URL = "AQICAHgo09mInVFdR4EEq0EVGKEqdsrRfiv24DtHIkiUO6cEfgHIhtt5bRV1/i5hdm2TWrOGAAAApzCBpAYJKoZIhvcNAQcGoIGWMIGTAgEAMIGNBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJHX0UnigIOdAya6hQIBEIBga4VxTDO8KDLapVw2z1pZjekITWs4Q7p9QtToehHuT33EcBunQ0dVHRCruaA/lVik4Adxkbr8Z6eGkm2N1opnAFz51eeUg7PozaSv5D24RnEiUTEAB9Bt/aZwNCMhWk7n"
+DECRYPTED_HOOK_URL = boto3.client('kms').decrypt(CiphertextBlob=b64decode(ENCRYPTED_HOOK_URL))['Plaintext']
+HOOK_URL = "https://%s" % DECRYPTED_HOOK_URL
 ENCRYPTED_USER = "AQICAHgo09mInVFdR4EEq0EVGKEqdsrRfiv24DtHIkiUO6cEfgGhkO9rpSP1vek8aOkxVLTvAAAAcDBuBgkqhkiG9w0BBwagYTBfAgEAMFoGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5rWZfz6EurzQfmJiAgEQgC22xVN8xbIS2m4DD4zBruqWjBslGVzdJ72Jc3Ck5K+V0c10nbmHwFfFVCqAcF4="
 DECRYPTED_USER = boto3.client('kms').decrypt(CiphertextBlob=b64decode(ENCRYPTED_USER))['Plaintext']
 ENCRYPTED_PASSWORD = "AQICAHgo09mInVFdR4EEq0EVGKEqdsrRfiv24DtHIkiUO6cEfgHzPG0rjbCezBqKOGuxY0nJAAAAZzBlBgkqhkiG9w0BBwagWDBWAgEAMFEGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM4mlpF3dZu/KN7aVTAgEQgCTYWrUPeDtFYmXoAkNwoerIRdO/DZyUMoH6tRQdmWClXo16kD4="
