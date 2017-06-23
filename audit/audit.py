@@ -8,8 +8,6 @@ from __future__ import print_function
 import json
 import logging
 import boto3
-import os
-import pprint
 import pycurl
 from io import BytesIO
 import json
