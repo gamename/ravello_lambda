@@ -23,7 +23,22 @@ SLACK_CHANNEL = '#training'  # Enter the Slack channel to send a message to
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-
+#
+# The encrypted values below were created using the following process
+#
+# 1. Create a new encryption key in AWS by going to the main console
+#    and selecting IAM->Encryption Keys->Create key
+#
+# 2. Go to your local command line and encrypt your strings using the
+#    newly-created key (e.g. 'foo') like this:
+#       aws kms encrypt --key-id alias/foo --plaintext "secrets and lies"
+#
+# 3. The resulting output are the ENCRYPTED_<whatever> values pasted below
+#
+# They can only be deciphered by the 'foo' key. That key is associated with
+# this lambda function using the "KMS key" option in the lambda Advanced
+# settings section of the Configuration tab.
+#
 ENCRYPTED_HOOK_URL = "AQICAHgo09mInVFdR4EEq0EVGKEqdsrRfiv24DtHIkiUO6cEfgHIhtt5bRV1/i5hdm2TWrOGAAAApzCBpAYJKoZIhvcNAQcGoIGWMIGTAgEAMIGNBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJHX0UnigIOdAya6hQIBEIBga4VxTDO8KDLapVw2z1pZjekITWs4Q7p9QtToehHuT33EcBunQ0dVHRCruaA/lVik4Adxkbr8Z6eGkm2N1opnAFz51eeUg7PozaSv5D24RnEiUTEAB9Bt/aZwNCMhWk7n"
 DECRYPTED_HOOK_URL = boto3.client('kms').decrypt(CiphertextBlob=b64decode(ENCRYPTED_HOOK_URL))['Plaintext']
 HOOK_URL = "https://%s" % DECRYPTED_HOOK_URL
