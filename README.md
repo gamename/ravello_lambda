@@ -13,6 +13,7 @@ example uses lambda_s3_monitor. There are 2 sections within `lambda_s3_monitor`.
   1. In Role Name, use a name that is unique within your AWS account (for example, lambda-s3-execution-role).
   1. In Select Role Type, choose AWS Service Roles, and then choose AWS Lambda. This grants the AWS Lambda service permissions to assume the role.
   1. In Attach Policy, choose `AWSLambdaBasicExecutionRole`.
+  1. Change the `role` line in `lambda.json` to match your new role name and user id
 
 In the same directory as this readme file, run command
 ```
