@@ -66,7 +66,11 @@ def handler(event, context):
     j = json.loads(buf.getvalue())
     for item in j:
         if "deployment" in item:
-            total_active += item["deployment"]["totalActiveVms"]
+            active = item["deployment"]["totalActiveVms"]
+            total_active += active
+            if active:
+                msg = "Lab: %s, Owner: %s, VMs: %d" % (item["name"], item["owner"], active)
+                post_to_slack(msg)
     post_to_slack("Ravello total active VMs is %d"%total_active)
 
 # Uncomment to debug
